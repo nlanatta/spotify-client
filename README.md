@@ -1,2 +1,0 @@
-# spotify-client
-Spotify Client
