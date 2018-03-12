@@ -1,24 +1,23 @@
 import React, { Component } from "react";
 import { Redirect } from 'react-router-dom';
+import queryString from 'query-string';
 
 export default class SpotifyLoginResponse extends Component { 
 
-  getFrom(match) {
-    const paramKeys = Object.keys(match.params)
-
-    paramKeys.forEach( (item) => {
-      console.log(item);
-    });
-    return "";
+  constructor(props) {
+    super(props);
+    const parsed = queryString.parse(props.location.search);
+    this.state = {
+      code: parsed.code
+    } 
   }
 
   render() {
     return (
       <Redirect
-          from={this.getFrom}
           to={{
             pathname: "/welcome",
-            //state: { code: this.state.code}
+            state: this.state
           }}
         />
     );
