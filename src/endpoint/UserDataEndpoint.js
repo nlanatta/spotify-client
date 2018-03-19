@@ -1,12 +1,13 @@
 import React, { Component } from "react";
+import postal from 'postal';
+
 export default class UserDataEndpoint extends Component {
     constructor() {
         super();
         this.state = {};
     }
 
-    userDataCall(ownerCallback,code) {
-        let selfCalllback = ownerCallback;
+    userDataCall(code) {
         let url = '/userData';
         let co = code;
         fetch(url, {
@@ -23,17 +24,16 @@ export default class UserDataEndpoint extends Component {
               return results.json();        
          }).then((resource) => {           
               console.log(resource);
-              selfCalllback.handleResponse(resource);
+              var channel = postal.channel("spotify");
+              channel.publish("user.profile", resource);
          }).catch(function(error) {
               console.log('There has been a problem with your fetch operation: ' + error.message);
         });
     }
 
-    userPlayListsCall(ownerCallback) {
-        let selfCalllback = ownerCallback;
-        let p = ownerCallback.props !== undefined ? ownerCallback.props : {};
-        let id = p !== undefined ? p.id : "";
-        let url = '/userPlayLists?userId='+p.id;
+    userPlayListsCall(i) {
+        let id = i;
+        let url = '/userPlayLists?userId='+id;
         fetch(url, {
           method: 'GET',
           headers: {
@@ -45,7 +45,8 @@ export default class UserDataEndpoint extends Component {
               return results.json();        
          }).then((resource) => {           
               console.log(resource);
-              selfCalllback.handleResponse(resource);
+              var channel = postal.channel("spotify");
+              channel.publish("user.playlists", resource);
          }).catch(function(error) {
               console.log('There has been a problem with your fetch operation: ' + error.message);
         });

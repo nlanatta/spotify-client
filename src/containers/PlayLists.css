@@ -11,3 +11,15 @@
 .Home .lander p {
   color: #999;
 }
+
+.Home .lander ul {
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+  font-weight: bold
+}
+
+.Home .lander ul li {
+  color: rgb(59, 70, 170);
+  font-size: 12px;
+  font-weight: bold
+}

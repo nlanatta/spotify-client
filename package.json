@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "postal": "^2.0.5",
     "query-string": "^5.1.0",
     "react": "^16.2.0",
     "react-bootstrap": "^0.32.1",

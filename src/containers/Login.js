@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import "./Login.css";
 import AppButton from "../components/AppButton";
 import LoaderEndpoint from "../endpoint/LoaderEndpoint";
+import postal from 'postal';
 
 export default class Login extends Component {
   constructor(props) {
     super(props);
   }
 
-  handleChange = result => {
+  handleResponse = ( result, envelope)  => {
     window.open(result, '_top', "Login Spotify", "channelmode=yes, height=400, width=600");
   }
 
@@ -24,7 +25,9 @@ export default class Login extends Component {
   login() {
     console.log("LOGIN requested");
     var loginCall = new LoaderEndpoint();
-    loginCall.loginCall(this.handleChange);    
+    var channel = postal.channel("spotify");
+    var subscription = channel.subscribe("user.url", this.handleResponse.bind(this));
+    loginCall.loginCall();    
   } 
 
   render() {

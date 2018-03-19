@@ -3,6 +3,7 @@ import "./Welcome.css";
 import UserDataEndpoint from "../endpoint/UserDataEndpoint";
 import RouteNavItem from "../components/RouteNavItem";
 import Routes from '../Routes';
+import postal from 'postal';
 
 export default class Welcome extends Component { 
 
@@ -29,10 +30,15 @@ export default class Welcome extends Component {
   getUserData() {
     let userDataEndpoint = new UserDataEndpoint();
     let code = this.state.code;
-    let u = userDataEndpoint.userDataCall(this, code);
+
+    var channel = postal.channel("spotify");
+    var subscription = channel.subscribe("user.profile", this.handleResponse.bind(this));
+
+    let u = userDataEndpoint.userDataCall(code);
   }
 
-  handleResponse(user) {
+  
+  handleResponse(user, envelope) {
     if(user == undefined) {
       user = {
         id: "",
@@ -48,9 +54,11 @@ export default class Welcome extends Component {
       email: user.email,
       birthdate: user.birthdate,
       uri: user.uri,
-      imageUrl: user.images[0].url
+      imageUrl: user.images[0].url,
+      path: "/playlists/" + user.id
     });
     this.props.id = this.state.id;
+
   }
 
   render() {
@@ -64,10 +72,9 @@ export default class Welcome extends Component {
           <p>Uri: {this.state.uri}</p>
           <img src={this.state.imageUrl} />
         </div>
-        <RouteNavItem key={1} href="/playlists" >
+        <RouteNavItem key={1} id={this.props.id} href={this.state.path}>
           PlayLists
         </RouteNavItem> 
-        <Routes childProps={this.props}/>
       </div>
     );
   }

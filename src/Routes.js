@@ -7,13 +7,15 @@ import Welcome from "./containers/Welcome";
 import PlayLists from "./containers/PlayLists";
 import SpotifyLoginResponse from "./containers/SpotifyLoginResponse";
 import AppliedRoute from "./components/AppliedRoute";
+import RemovedFiles from "./containers/RemovedFiles";
 
 export default ({ childProps }) =>
   <Switch>
     <AppliedRoute path="/" exact component={Home} props={childProps}/>
     <AppliedRoute path="/welcome" exact component={Welcome} props={childProps}/>
     <AppliedRoute path="/login" exact component={Login} props={childProps}/>
-    <AppliedRoute path="/playlists" exact component={PlayLists} props={childProps}/>
+    <AppliedRoute path="/playlists/:id" exact component={PlayLists} props={childProps}/>
+    <AppliedRoute path="/removeTracksDuplicates/:id" exact component={RemovedFiles} props={childProps}/>
     <AppliedRoute path="/spotifyloginresponse" exact component={SpotifyLoginResponse} props={childProps}/>
     { /* Finally, catch all unmatched routes */ }
     <Route component={NotFound} />
