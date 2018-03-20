@@ -4,9 +4,30 @@ import Routes from './Routes'
 import './App.css';
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+        extraData: null
+    };    
+}
+
+  addExtraChildData(data) {
+    this.setState(
+      {
+        extraData: data
+      }
+    );
+  }
+
+  getExtraData() {
+    return this.state.extraData;
+  }
+
   render() {
     const childProps = {
-      id : ""
+      addExtraChildData : this.addExtraChildData.bind(this),
+      extraData : this.getExtraData.bind(this)
     };
     return (
       <div className="App">

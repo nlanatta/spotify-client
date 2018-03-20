@@ -7,9 +7,10 @@ export default class EditUserDataEndpoint extends Component {
         this.state = {};
     }
 
-    removeDuplicateTracks(i) {
+    removeDuplicateTracks(i, t) {
         let id = i;
-        let url = '/removeTracks';
+        let tracks = t;
+        let url = '/removeDuplicateTracks';
         fetch(url, {
             method: 'POST',
             headers: {
@@ -17,8 +18,8 @@ export default class EditUserDataEndpoint extends Component {
                 'Content-Type': 'application/json'
               },
             body: JSON.stringify({
-              "id": id , 
-              "tracks": this.props.tracks
+              "id": id,
+              "tracks": tracks
             })
          })
           .then(results => {

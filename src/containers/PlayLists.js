@@ -38,13 +38,18 @@ export default class PlayLists extends Component {
     for (let item of lists) {
       console.log(item.name);
       console.log(item.id);
+      let pId = item.id;
       for (let track of item.tracks.items) {
         if(all.some(i => i.track.id == track.track.id)) {
-          duplicates.push(track.track);
+          duplicates.push({
+            playlistId: pId,
+            track: "spotify:track:"+track.track.id}
+          );
         }
         all.push(track);        
       }
     }
+    this.props.addExtraChildData(duplicates);
     this.setState({ 
       lists: lists,
       duplicates: duplicates,
